@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "VisualNovel.sln"
+    "dotnet.defaultSolution": "VN.sln"
 }
