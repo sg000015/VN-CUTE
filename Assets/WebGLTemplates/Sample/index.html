@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>Maze World</title>
+  <link rel="stylesheet" type="text/css" href="./index.css">
+
+</head>
+
+<body ondragstart="return false" onselectstart="return false">
+
+  <div id="unity-container"><canvas id="unity-canvas"></canvas></div>
+
+  <div id="loader">
+    <span class="loadingText"></span>
+    <div class="progress">
+      <div class="fill"></div>
+      <div class="fillAmount"></div>
+    </div>
+  </div>
+
+  <script>
+    (function (exec) {
+      RegExp.prototype.exec = function () {
+        arguments[0] = arguments[0].replace('Mozilla/5.0 (Macintosh; Intel Mac OS X 11', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10');
+        return exec.apply(this, arguments);
+      };
+    })(RegExp.prototype.exec);
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/gif.js/dist/gif.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/buzzfeed/libgif-js@master/libgif.js"></script>
+  <script src="Build/Build.loader.js"></script>
+  <script>
+
+      
+
+    //하단 전역변수들 Unity-Plugins-WebGL에서도 참조되기에 바뀌지 않도록 주의
+    var unityInstance;
+    var loadingPercentage = document.getElementById("loadingPercentage");
+    var loader = document.getElementById("loader");
+    const target = window.document.querySelector('.loadingText');
+    const target2 = window.document.querySelector('.progress .fill');
+    const target3 = window.document.querySelector('.progress .fillAmount');
+
+    let intervalId;
+    let brightness = 1;
+
+    target.innerHTML = "";
+    target2.style.width = "0%";
+    // target3.innerHTML = "0%";
+
+
+    //Query로 전달할 데이터
+    var data = "";
+    var loaded = false;
+
+    var time = 0;
+    var onPrograss = function (progress) {
+      if (progress < 0.9) {
+        setInterval(function () {
+          if (loaded) { return; }
+          if (time < 40) {
+            time++;
+            target2.style.width = time + "%";
+          }
+          else if (time < 80) {
+            time++;
+            target2.style.width = time + "%";
+          }
+          else {
+          }
+        }, 500);
+      }
+    }
+
+    
+    // 페이지 로드 시 실행
+    window.addEventListener("DOMContentLoaded", loadUnityWithEtag);
+
+
+    async function getEtag(url) {
+        try {
+            const response = await fetch(url, { method: "HEAD" }); // HEAD 요청
+            return response.headers.get("etag"); // eTag 값 가져오기
+        } catch (error) {
+            console.error(`Failed to fetch eTag for ${url}:`, error);
+            return null;
+        }
+    }
+
+    function loadUnityWithEtag() {
+        const canvas = document.querySelector("#unity-canvas");
+
+        getEtag("Build/Build.framework.js.unityweb").then(eTag => {
+            if (!eTag) {
+                console.error("eTag not found. Loading without cache.");
+            }
+
+            console.log(eTag);
+
+            createUnityInstance(canvas, {
+                arguments: [],
+                dataUrl: "Build/Build.data.unityweb?etag=${eTag}",
+                frameworkUrl: "Build/Build.framework.js.unityweb?etag=${eTag}",
+                codeUrl: "Build/Build.wasm.unityweb?etag=${eTag}",
+                streamingAssetsUrl: "StreamingAssets",
+                companyName: "DefaultCompany",
+                productName: "WebGPU_World",
+                productVersion: "0.1.0",
+            },onPrograss).then((result) => {
+            loaded = true;
+            unityInstance = result;
+
+            target2.style.width = 100 + "%";
+            startFade();
+
+            }).catch((err) => {
+            console.log(err);
+            });
+        });
+    }
+
+
+    const listener = "ServerManager";
+
+
+    function startFade() {
+      intervalId = setInterval(() => {
+        brightness -= 0.01;
+        if (brightness <= 0) {
+          clearInterval(intervalId);
+          brightness = 0;
+          loader.style.display = "none";
+
+          unityInstance.SendMessage(listener, "SendUserName", JSON.stringify({ p: parity, nickname: name }));
+        }
+        loader.style.filter = `brightness(${brightness})`;
+      }, 10); // 0.1초마다 실행
+    }
+
+
+    //채팅 키입력 (InputField가 html부분에 포커싱댐)
+    window.addEventListener("keydown", function (event) {
+        if(event.keyCode===13)  //Enter
+        {
+            unityInstance.SendMessage(listener, "KeyDownFromWeb", 13);
+        }
+        else if(event.keyCode===27) //Esc
+        {
+            unityInstance.SendMessage(listener, "KeyDownFromWeb", 27);
+        }
+        else if(event.keyCode===271)
+        {
+          unityInstance.SendMessage(listener, "KeyDownFromWeb", 271);
+        }
+    });
+
+
+    let parity = "";
+    let name = "";
+
+    // 부모 창에서 메시지 수신을 처리하는 이벤트 리스너
+    window.addEventListener('message', function (event) {
+      if (event.data.startsWith("i_")) { parity = event.data.slice(2); }
+      if (event.data.startsWith("n_")) { name = event.data.slice(2); }
+    });
+
+
+
+    document.addEventListener('keydown', function (e) {
+
+      //소스보기 (Ctrl + U) 방지
+      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+        e.preventDefault();
+      }
+
+      //개발자도구 (Ctrl + Shift + I) 방지
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+        e.preventDefault();
+      }
+      //개발자도구 (F12) 방지
+      if (e.keyCode == 123) {
+        e.preventDefault();
+      }
+    });
+
+
+  </script>
+
+
+  <!--9버전이상부터 함수가 바뀜 → 확인못했음. -->
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_MBWfdUUhZ0BwKWbTDMHWnpIvMJXO5CA",
+      authDomain: "mg-world.firebaseapp.com",
+      projectId: "mg-world",
+      storageBucket: "mg-world.firebasestorage.app",
+      messagingSenderId: "466910451531",
+      appId: "1:466910451531:web:e4ccc229c1a82ef5a3bace",
+      // measurementId: "G-RBDMLJB6F6",
+      // googleWebId: "736457445186-ob4mfm8h4scna77nhn94hlgfjs55sopr.apps.googleusercontent.com"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+    const db = firebase.firestore();
+
+  </script>
+
+</body>
+
+</html>

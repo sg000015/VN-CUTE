@@ -1,0 +1,25 @@
+
+<style onload="{ document.write('<iframe id=\'world\' width=100% height=100% src=https://sg000015.github.io/World_Sample/ frameborder=0 picture-in-picture frameborder=0 allow=fullscreen></iframe> <script> const iframe = document.getElementById(\'world\'); iframe.onload = function() {iframe.contentWindow.postMessage(\'i_\'+_userId, \'https://sg000015.github.io\'); iframe.contentWindow.postMessage(\'n_\'+_nickname, \'https://sg000015.github.io\');} </script>');}"></style>
+
+<style onload="
+if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent))
+{
+    labyPopup.confirm('모바일에서는 진행이 불가능합니다.', function(yes) {
+    if (yes) 
+    {
+        history.back();
+    }
+    else
+    {
+        history.back();
+    }});
+}
+
+ const iframe = document.getElementById('world');
+ iframe.onload = function() {iframe.contentWindow.postMessage('i_'+_userId, 'https://sg000015.github.io'); iframe.contentWindow.postMessage('n_'+_nickname, 'https://sg000015.github.io')};
+">
+</style>
+
+<div style="text-align: center; width: 95vw; height: 90vh; margin: 0px auto;">
+<iframe id='world' width=100% height=100% src=https://sg000015.github.io/World_Sample/ frameborder=0 scrolling="no" picture-in-picture frameborder=0 allow=fullscreen></iframe>
+</div>

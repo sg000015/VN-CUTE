@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>My-Hero</title>
+  <link rel="stylesheet" type="text/css" href="./index.css">
+
+</head>
+
+<body ondragstart="return false" onselectstart="return false">
+
+  <div id="unity-container"><canvas id="unity-canvas"></canvas></div>
+
+  <div id="loader">
+    <span class="loadingText"></span>
+  </div>
+
+  <script>
+    (function (exec) {
+      RegExp.prototype.exec = function () {
+        arguments[0] = arguments[0].replace('Mozilla/5.0 (Macintosh; Intel Mac OS X 11', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10');
+        return exec.apply(this, arguments);
+      };
+    })(RegExp.prototype.exec);
+  </script>
+
+
+  <script src="Build/Build.loader.js"></script>
+  <script>
+
+
+    var unityInstance;
+    window.document.querySelector('.loadingText').innerHTML = "Loading...";
+
+
+    //Query로 전달할 데이터
+    var data = "";
+    var loaded = false;
+
+    // 페이지 로드 시 실행
+    window.addEventListener("DOMContentLoaded", loadUnityWithEtag);
+
+
+    async function getEtag(url) {
+      try {
+        const response = await fetch(url, { method: "HEAD" }); // HEAD 요청
+        return response.headers.get("etag"); // eTag 값 가져오기
+      } catch (error) {
+        console.error(`Failed to fetch eTag for ${url}:`, error);
+        return null;
+      }
+    }
+
+    function loadUnityWithEtag() {
+      const canvas = document.querySelector("#unity-canvas");
+
+      getEtag("Build/Build.framework.js.unityweb").then(eTag => {
+        if (!eTag) {
+          console.error("eTag not found. Loading without cache.");
+        }
+
+        console.log("eTag:", eTag);
+
+
+        createUnityInstance(canvas, {
+          arguments: [],
+          dataUrl: `Build/Build.data.unityweb?etag=${eTag}`,
+          frameworkUrl: `Build/Build.framework.js.unityweb?etag=${eTag}`,
+          codeUrl: `Build/Build.wasm.unityweb?etag=${eTag}`,
+          streamingAssetsUrl: "StreamingAssets",
+          companyName: "OG-SOFT",
+          productName: "My-Hero",
+          productVersion: "0.1.0",
+        }).then((result) => {
+          loaded = true;
+          unityInstance = result;
+
+          loader.style.display = "none";
+          unityInstance.SendMessage("StoryManager", "LoadScene", scene);
+          // unityInstance.SendMessage("StoryManager", "SendUserName", JSON.stringify({ p: parity, nickname: name }));
+
+        }).catch((err) => {
+          console.log(err);
+        });
+      });
+    }
+
+    let parity = "";
+    let name = "";
+    let scene = "001";
+
+    // 부모 창에서 메시지 수신을 처리하는 이벤트 리스너
+    window.addEventListener('message', function (event) {
+      if (event.data.startsWith("i_")) { parity = event.data.slice(2); }
+      if (event.data.startsWith("n_")) { name = event.data.slice(2); }
+      if (event.data.startsWith("s_")) { scene = event.data.slice(2); }
+    });
+
+    document.addEventListener('keydown', function (e) {
+
+      //소스보기 (Ctrl + U) 방지
+      if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+        e.preventDefault();
+      }
+
+      //개발자도구 (Ctrl + Shift + I) 방지
+      if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+        e.preventDefault();
+      }
+      //개발자도구 (F12) 방지
+      if (e.keyCode == 123) {
+        e.preventDefault();
+      }
+    });
+
+  </script>
+
+</body>
+
+</html>
