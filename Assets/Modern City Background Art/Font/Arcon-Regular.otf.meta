@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 9dac61902ff55470f8025bf4816d92ae
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Arcon
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 284688
+  packageName: 2D Modern City Background Art Pack
+  packageVersion: 1.0.0
+  assetPath: Assets/Modern City Background Art/Font/Arcon-Regular.otf
+  uploadId: 663141
