@@ -7,44 +7,40 @@ public class Story001 : StoryPlayer
 
     [Header("UI")]
     public Image black;
-    public Text text;
-    public CanvasGroup canvasGroupText;
     public CanvasGroup canvasGroupQuestion;
 
 
+    public Girl girl;
 
-    protected override void Excute()
+
+
+    public override void Play()
     {
-        base.Excute();
+        base.Play();
 
-        videoPlayer.Play();
-        videoPlayer.loopPointReached += (a) =>
-        {
-            P_000();
-        };
+        black.color = new Color(0, 0, 0, 0.9f);
 
-        Invoke("PlayBGM", 28f);
-    }
+        SoundManager.Inst.PlaySfx(1, 0.5f);
+        SoundManager.Inst.PlayBGM(0);
 
-    void PlayBGM()
-    {
-        var audio = GetComponent<AudioSource>();
-        // audio.time = 2;
-        audio.Play();
+        girl.gameObject.SetActive(false);
+        P_000();
     }
 
     void P_000()
     {
-        var chat = new DialogueFormat[2]
+        var chat = new DialogueFormat[]
         {
-            new DialogueFormat(Scenario.T_Hero, Scenario.Unknown, "안녕? 나는 너를 위해 찾아온 히어로야!"),
-            new DialogueFormat(Scenario.T_Hero, Scenario.Unknown, "무슨 고민이 있는지 말해줄래?"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "쿨.."),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "쿠울..zzZ"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "흠냐..."),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "말랑말랑.."),
+
+            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "에..에?!!"),
+            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "잠..잠깐! 어딜 만지는거야!"),
         };
 
         Instantiate(Resources.Load<DialogueUI>("Dialogue")).Dialogue(chat);
-
-
-        black.color = new Color(0, 0, 0, 0.8f);
 
         StoryManager.Inst.OnEndDialogue += P_001;
     }
@@ -53,16 +49,44 @@ public class Story001 : StoryPlayer
     {
         StoryManager.Inst.OnEndDialogue -= P_001;
 
-        Invoke("P_002", 1f);
+        StartCoroutine(FadeIn());
+    }
+
+    IEnumerator FadeIn()
+    {
+        float time = 0f;
+        Color color = Color.black;
+
+        while (time < 1f)
+        {
+            time += Time.deltaTime * 0.5f;
+            color.a = Mathf.Lerp(0.9f, 0f, time);
+            black.color = color;
+            yield return null;
+        }
+
+        P_002();
     }
 
     void P_002()
     {
-        var chat = new DialogueFormat[3]
+        var chat = new DialogueFormat[]
         {
-            new DialogueFormat(Scenario.T_Me, Scenario.Me, "..."),
-            new DialogueFormat(Scenario.T_Me, Scenario.Me, "삶이 너무 힘들어요."),
-            new DialogueFormat(Scenario.T_Me, Scenario.Me, "더이상 살아갈 이유가 있을까요?")
+            new DialogueFormat(Scenario.Me, Scenario.Me, "아, 꿈이었나?.."),
+
+            new DialogueFormat(Scenario.Me, Scenario.Me, "응? 이건 누구지?",() => {
+                girl.gameObject.SetActive(true);
+                girl.ChangeCloth(0);
+                girl.ChangeDeco(0);
+                girl.ChangeFace(4);
+                }),
+            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "(화난 표정의 소녀가 옆에 누워있다.)"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "아, 동생인가?"),
+
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "<size=40>(퍽!)</size>", ()=>{ SoundManager.Inst.PlaySfx(2); girl.ChangeFace(6);}),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "<size=40>바보! 멍청이! 변태!!!</size>",()=>{ girl.ChangeFace(4);}  ),
+
+            new DialogueFormat(Scenario.Me, Scenario.Me, "으; 아퍼라~",()=>{ girl.gameObject.SetActive(false); } ),
         };
 
         Instantiate(Resources.Load<DialogueUI>("Dialogue")).Dialogue(chat);
@@ -74,17 +98,14 @@ public class Story001 : StoryPlayer
     {
         StoryManager.Inst.OnEndDialogue -= P_003;
 
-        Invoke("P_004", 1f);
+        Invoke("P_004", 1.0f);
     }
 
     void P_004()
     {
-        var chat = new DialogueFormat[4]
+        var chat = new DialogueFormat[]
         {
-            new DialogueFormat(Scenario.T_Hero, Scenario.Unknown, "중요한건 현실이 아니야."),
-            new DialogueFormat(Scenario.T_Hero, Scenario.Unknown, "어떤 꿈을 가졌는지."),
-            new DialogueFormat(Scenario.T_Hero, Scenario.Unknown, "어떤 행복을 품고 살아가는지!"),
-            new DialogueFormat(Scenario.T_Hero, Scenario.Unknown, "어떤 생각을 하고 살아가는지가 가장 중요한걸?")
+            new DialogueFormat(Scenario.Me, Scenario.Me, "근데, 쟤는 왜 내 침대에 누워있던거람?"),
         };
 
         Instantiate(Resources.Load<DialogueUI>("Dialogue")).Dialogue(chat);
@@ -99,6 +120,7 @@ public class Story001 : StoryPlayer
         StartCoroutine(FadeOut());
     }
 
+
     IEnumerator FadeOut()
     {
         yield return null;
@@ -109,57 +131,12 @@ public class Story001 : StoryPlayer
         while (time < 1f)
         {
             time += Time.deltaTime * 0.5f;
-            color.a = Mathf.Lerp(0.8f, 0.9f, time);
+            color.a = Mathf.Lerp(0.0f, 1.0f, time);
             black.color = color;
             yield return null;
         }
 
-        text.text = "히어로를 만난 순간";
-        time = 0;
-        while (time < 1)
-        {
-            time += Time.deltaTime;
-            canvasGroupText.alpha = time;
-            yield return null;
-        }
-
         yield return new WaitForSeconds(1.0f);
-
-        while (time > 0)
-        {
-            time -= Time.deltaTime;
-            canvasGroupText.alpha = time;
-            yield return null;
-        }
-        yield return new WaitForSeconds(1.0f);
-
-        text.text = "내가 태어난 의미를\n마주하는 느낌이었다.";
-        time = 0;
-        while (time < 1)
-        {
-            time += Time.deltaTime;
-            canvasGroupText.alpha = time;
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(2.0f);
-
-        while (time > 0)
-        {
-            time -= Time.deltaTime;
-            canvasGroupText.alpha = time;
-            yield return null;
-        }
-
-        time = 0;
-
-        while (time < 1f)
-        {
-            time += Time.deltaTime;
-            color.a = Mathf.Lerp(0.8f, 1f, time);
-            black.color = color;
-            yield return null;
-        }
 
         canvasGroupQuestion.gameObject.SetActive(true);
         canvasGroupQuestion.alpha = 0;

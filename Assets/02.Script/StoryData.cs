@@ -62,26 +62,17 @@ public class Scenario
     public static readonly string Unknown = "<color=#FFF56B>???</color>";
     public static readonly string Me = "<color=#FFF56B>나</color>";
 
-    public static readonly string Hero = "<color=#FFF56B>히어로</color>";
+    public static readonly string UnknownPink = "<color=#F912FF>???</color>";
+    public static readonly string Girl = "<color=#F912FF>소미</color>";
 
-    public static readonly string School1 = "<color=#FFF56B>일진1</color>";
-    public static readonly string School2 = "<color=#FFF56B>일진2</color>";
 
-    public static readonly string Factory1 = "<color=#FFF56B>직원1</color>";
-    public static readonly string Factory2 = "<color=#FFF56B>직원2</color>";
-    public static readonly string Factory3 = "<color=#FFF56B>직원3</color>";
-    public static readonly string Factory4 = "<color=#FFF56B>사장</color>";
+    public static readonly string Waiter = "<color=#81E9FF>종업원</color>";
+    public static readonly string Hair = "<color=#6CFF85>미용사</color>";
 
 
 
     public static readonly string T_None = "Thumbnail/me";
     public static readonly string T_Me = "Thumbnail/me";
-    public static readonly string T_Hero = "Thumbnail/hero";
-    public static readonly string T_School1 = "Thumbnail/School1";
-    public static readonly string T_School2 = "Thumbnail/School2";
+    public static readonly string T_Girl = "Thumbnail/girl";
 
-    public static readonly string T_Factory1 = "Thumbnail/Factory1";
-    public static readonly string T_Factory2 = "Thumbnail/Factory2";
-    public static readonly string T_Factory3 = "Thumbnail/Factory3";
-    public static readonly string T_Factory4 = "Thumbnail/Factory4";
 }

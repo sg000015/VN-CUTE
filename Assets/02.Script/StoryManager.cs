@@ -1,8 +1,7 @@
-using System.Collections;
-using Unity.VisualScripting;
+
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public partial class StoryManager : MonoBehaviour
 {
@@ -20,9 +19,7 @@ public partial class StoryManager : MonoBehaviour
         }
     }
 
-
     public Action OnEndDialogue = () => { };
-
 
 
 #if UNITY_EDITOR
@@ -31,6 +28,9 @@ public partial class StoryManager : MonoBehaviour
     [ContextMenu("Play")]
     public void LoadTestScene()
     {
+#if UNITY_EDITOR
+        if (Application.isPlaying == false) return;
+#endif
         LoadScene(testScene);
     }
 
@@ -55,5 +55,8 @@ public partial class StoryManager : MonoBehaviour
     {
         Instantiate(Resources.Load<StoryPlayer>(sceneName)).Play();
     }
+
+
+
 
 }

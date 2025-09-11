@@ -69,10 +69,6 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySfx(int index, float volume = 1)
     {
-        if (index == 2)
-        {
-            volume *= 0.8f;
-        }
         sfxSouces.PlayOneShot(sfxClips[index], volume);
     }
 

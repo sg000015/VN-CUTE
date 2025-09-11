@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>My-Hero</title>
+  <title>CUTEOFCUTE</title>
   <link rel="stylesheet" type="text/css" href="./index.css">
 
 </head>
@@ -56,8 +56,9 @@
 
     function loadUnityWithEtag() {
       const canvas = document.querySelector("#unity-canvas");
+      const loadingText = document.querySelector(".loadingText");
 
-      getEtag("Build/Build.framework.js.unityweb").then(eTag => {
+      getEtag("Build/Build.framework.js").then(eTag => {
         if (!eTag) {
           console.error("eTag not found. Loading without cache.");
         }
@@ -67,13 +68,17 @@
 
         createUnityInstance(canvas, {
           arguments: [],
-          dataUrl: `Build/Build.data.unityweb?etag=${eTag}`,
-          frameworkUrl: `Build/Build.framework.js.unityweb?etag=${eTag}`,
-          codeUrl: `Build/Build.wasm.unityweb?etag=${eTag}`,
+          dataUrl: `Build/Build.data?etag=${eTag}`,
+          frameworkUrl: `Build/Build.framework.js?etag=${eTag}`,
+          codeUrl: `Build/Build.wasm?etag=${eTag}`,
           streamingAssetsUrl: "StreamingAssets",
           companyName: "OG-SOFT",
-          productName: "My-Hero",
+          productName: "VN-Cute",
           productVersion: "0.1.0",
+        }, (progress) => {
+          // progress는 0.0 ~ 1.0 사이 값
+          const percent = Math.floor(progress * 100);
+          loadingText.innerHTML = `Loading ${percent}%`;
         }).then((result) => {
           loaded = true;
           unityInstance = result;
