@@ -39,9 +39,9 @@ public class Story016 : StoryPlayer
             new DialogueFormat(Scenario.Me, Scenario.Girl, "오빠가 왜 미안해!..", () => {  girl.ChangeFace(1); }),
             new DialogueFormat(Scenario.Me, Scenario.Me, "내가 어떻게 너를 잊어버릴 수가 있지.."),
             new DialogueFormat(Scenario.Me, Scenario.Girl, "에이~!"),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "오히려 다시 기억해줘서 고마운걸?"),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "오히려, 다시 기억해줘서 고마운걸?"),
             new DialogueFormat(Scenario.Me, Scenario.Me, "정말 미안해.."),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "어떻게 여자친구를 착각할 수가 있는지..!"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "어떻게, 여자친구를 착각할 수 있는지..!"),
 
             new DialogueFormat(Scenario.Me, Scenario.Girl, "에헴~!", () => {  girl.ChangeFace(7); }),
             new DialogueFormat(Scenario.Me, Scenario.Girl, "처음엔, 정말로 당황했었다구!"),
@@ -106,9 +106,9 @@ public class Story016 : StoryPlayer
             new DialogueFormat(Scenario.Me, Scenario.Me, "(에필로그)"),
             new DialogueFormat(Scenario.Me, Scenario.Me, "근데, 왜 맨날 내 침대에 누워있던거야?"),
             new DialogueFormat(Scenario.Me, Scenario.Girl, "그건...", () => { girl.gameObject.SetActive(true); }),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "잠꼬대로는 나를 정확히 불러줬으니까!"),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "잠꼬대로는, 나를 정확히 불러줬으니까!"),
             new DialogueFormat(Scenario.Me, Scenario.Girl, "비록, 꿈속이었겠지만..."),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "나를 분명히 기억하고 있었는걸!!"),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "나를 분명히 기억하고 있었다구!!"),
         };
 
         Instantiate(Resources.Load<DialogueUI>("Dialogue")).Dialogue(chat);
@@ -143,7 +143,7 @@ public class Story016 : StoryPlayer
         {
             new DialogueFormat(Scenario.Me, Scenario.Me, "(지난 밤)"),
             new DialogueFormat(Scenario.Me, Scenario.Me, "(잠꼬대로) 소미야..사랑해...영원하자.."),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "응..!"),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "응..!", ()=>{ girl.gameObject.SetActive(true); }),
             new DialogueFormat(Scenario.Me, Scenario.Girl, "언제까지든 기다릴게!!!"),
         };
 
