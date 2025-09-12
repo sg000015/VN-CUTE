@@ -18,7 +18,7 @@ public class Story008 : StoryPlayer
     {
         base.Play();
 
-        SoundManager.Inst.PlayBGM(1);
+        SoundManager.Inst.PlayBGM(0);
 
         girl.gameObject.SetActive(false);
 

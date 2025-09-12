@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Story004 : StoryPlayer
+public class Story014 : StoryPlayer
 {
 
     [Header("UI")]
@@ -11,7 +11,6 @@ public class Story004 : StoryPlayer
 
 
     public Girl girl;
-    public GameObject boy;
 
 
 
@@ -46,26 +45,20 @@ public class Story004 : StoryPlayer
     {
         var chat = new DialogueFormat[]
         {
-            new DialogueFormat(Scenario.Me, Scenario.Me, "(밥 먹으러 식당에 왔다.)" ),
-            new DialogueFormat(Scenario.Me, Scenario.Waiter, "주문하시겠습니까?", () => { boy.SetActive(true); }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "여기 커플세트로 하나 주세요." ),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "지금 커플이라고 한거야..?!", () => { boy.SetActive(false); girl.gameObject.SetActive(true);
-                girl.ChangeFace(3); }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "당연하지!"),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "커플 세트가 제일 싸잖아~"),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "아?! 난..또...", () => { girl.ChangeFace(6); }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "무슨 생각을 했길래 그래?"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(동생과 공원에 왔다.)" ),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "아까 표정이 안좋던데.. 무슨 일 있어?" ),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "있잖아...교통사고 당했던 날 기억나?", () => {  girl.gameObject.SetActive(true); girl.ChangeFace(5); }),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "응. 기억하지." ),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "어..? 기억이 난다고?!", () => {   girl.ChangeFace(3); }),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "당연하지, 내가 다친건데 기억을 못 할리가?.." ),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(어라? 기억이 나질 않는다.)"),
 
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "아..아니!!", () => { girl.ChangeFace(5);  }),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "아무 생각도 안했거든?!!", () => {  }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "(음식이 나왔다.)", () => { girl.gameObject.SetActive(false);  }),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "오빠, 지금 놀이공원으로 가자.", () => {   girl.ChangeFace(4); }),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "갑자기..?"),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "서둘러야겠다, 빨리 따라와!",() => {   girl.ChangeFace(3); }),
 
-            new DialogueFormat(Scenario.Me, Scenario.Waiter, "두분 잘 어울리시네요~ 맛있게드세요.",() => { boy.SetActive(true); }),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "무슨 소리에요.!!", () => {boy.SetActive(false);  girl.gameObject.SetActive(true);girl.ChangeFace(4);   }),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "제가 이런 바보랑 어울릴리가 없잖아요!!", () => {  }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "그렇게까지 화낼 필요는 없지 않냐.."),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "헤헷!.. 고멘나사이", () => {  girl.ChangeFace(2);  }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "(왠지 기뻐보이는건 기분탓인가?)", () => { girl.gameObject.SetActive(false); } ),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(동생을 따라가야겠다.)", () => { girl.gameObject.SetActive(false);  }),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(갑자기 왜 텐션이 올라간거지?)"),
 
         };
 

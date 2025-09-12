@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Story004 : StoryPlayer
+public class Story013 : StoryPlayer
 {
 
     [Header("UI")]
@@ -11,7 +11,6 @@ public class Story004 : StoryPlayer
 
 
     public Girl girl;
-    public GameObject boy;
 
 
 
@@ -19,7 +18,7 @@ public class Story004 : StoryPlayer
     {
         base.Play();
 
-        SoundManager.Inst.PlayBGM(1);
+        SoundManager.Inst.PlayBGM(0);
 
         girl.gameObject.SetActive(false);
 
@@ -46,26 +45,25 @@ public class Story004 : StoryPlayer
     {
         var chat = new DialogueFormat[]
         {
-            new DialogueFormat(Scenario.Me, Scenario.Me, "(밥 먹으러 식당에 왔다.)" ),
-            new DialogueFormat(Scenario.Me, Scenario.Waiter, "주문하시겠습니까?", () => { boy.SetActive(true); }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "여기 커플세트로 하나 주세요." ),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "지금 커플이라고 한거야..?!", () => { boy.SetActive(false); girl.gameObject.SetActive(true);
-                girl.ChangeFace(3); }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "당연하지!"),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "커플 세트가 제일 싸잖아~"),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "아?! 난..또...", () => { girl.ChangeFace(6); }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "무슨 생각을 했길래 그래?"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(동생이 눈 앞에 앉아있다.)"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "너는 남자친구 안 만드냐?", ()=> { girl.gameObject.SetActive(true);girl.ChangeFace(0); }),
 
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "아..아니!!", () => { girl.ChangeFace(5);  }),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "아무 생각도 안했거든?!!", () => {  }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "(음식이 나왔다.)", () => { girl.gameObject.SetActive(false);  }),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "...", () => { girl.ChangeFace(6); }),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "그게 무슨 뜻인지는 알고 하는 말이야?", () => { girl.ChangeFace(6); }),
 
-            new DialogueFormat(Scenario.Me, Scenario.Waiter, "두분 잘 어울리시네요~ 맛있게드세요.",() => { boy.SetActive(true); }),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "무슨 소리에요.!!", () => {boy.SetActive(false);  girl.gameObject.SetActive(true);girl.ChangeFace(4);   }),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "제가 이런 바보랑 어울릴리가 없잖아요!!", () => {  }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "그렇게까지 화낼 필요는 없지 않냐.."),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "헤헷!.. 고멘나사이", () => {  girl.ChangeFace(2);  }),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "(왠지 기뻐보이는건 기분탓인가?)", () => { girl.gameObject.SetActive(false); } ),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "뭐, 너 정도면 되게 이쁘니까?"),
+
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "아, 아니..", () => { girl.ChangeFace(3); }),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "그러니까.. 으흠!!", () => { girl.ChangeFace(7); }),
+
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "나 예뻐~?", () => { girl.ChangeFace(1); }),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "어디? 어디가 제일 예뻐~?", () => { girl.ChangeFace(2); }),
+
+            new DialogueFormat(Scenario.Me, Scenario.Me, "에헴.."),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "그래, 내가 잘못했다~"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(동생이 방으로 들어갔다.)", () => { girl.gameObject.SetActive(false); }),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "..."),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "눈물이 보였던 것 같은데, 기분탓이겠지..?"),
 
         };
 
@@ -80,6 +78,8 @@ public class Story004 : StoryPlayer
 
         StartCoroutine(FadeOut());
     }
+
+
 
 
     IEnumerator FadeOut()

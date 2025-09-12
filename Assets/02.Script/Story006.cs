@@ -21,7 +21,7 @@ public class Story006 : StoryPlayer
         black.color = new Color(0, 0, 0, 0.9f);
 
         SoundManager.Inst.PlaySfx(1, 0.5f);
-        SoundManager.Inst.PlayBGM(1);
+        SoundManager.Inst.PlayBGM(0);
 
         girl.gameObject.SetActive(false);
         P_000();

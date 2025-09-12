@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Story011 : StoryPlayer
+public class Story015 : StoryPlayer
 {
 
     [Header("UI")]
@@ -18,26 +18,40 @@ public class Story011 : StoryPlayer
     {
         base.Play();
 
-        black.color = new Color(0, 0, 0, 0.9f);
-
-        SoundManager.Inst.PlaySfx(1, 0.5f);
         SoundManager.Inst.PlayBGM(0);
 
         girl.gameObject.SetActive(false);
+
         P_000();
     }
+
+    // IEnumerator StartScene()
+    // {
+    //     float time = 0f;
+    //     Color color = Color.black;
+
+    //     while (time < 1f)
+    //     {
+    //         time += Time.deltaTime * 0.5f;
+    //         color.a = Mathf.Lerp(1.0f, 0.7f, time);
+    //         black.color = color;
+    //         yield return null;
+    //     }
+
+    //     P_000();
+    // }
 
     void P_000()
     {
         var chat = new DialogueFormat[]
         {
-            new DialogueFormat(Scenario.Me, Scenario.Me, "쿨.."),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "쿠울..zzZ"),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "흠냐..."),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "말랑말랑.."),
-
-            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "에..에?!!"),
-            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "잠..잠깐! 어딜 만지는거야!"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(놀이공원에 도착했다.)" ),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "오빠...여기 기억나?", () => { girl.gameObject.SetActive(true);  girl.ChangeFace(5); }),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "우리가 자주 오던 곳이잖아~"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(그러고보니 와본 적이 있던가?)"),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "그..그럼, 작년 가을에 왔던 것도 기억나?", () => { girl.gameObject.SetActive(true);  girl.ChangeFace(3); }),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "작년 가을? 당연하지!"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "그 날은, 내가 너한테 고백했었던..."),
         };
 
         Instantiate(Resources.Load<DialogueUI>("Dialogue")).Dialogue(chat);
@@ -49,44 +63,31 @@ public class Story011 : StoryPlayer
     {
         StoryManager.Inst.OnEndDialogue -= P_001;
 
-        StartCoroutine(FadeIn());
+        StartCoroutine(P_002());
     }
 
-    IEnumerator FadeIn()
+    IEnumerator P_002()
     {
         float time = 0f;
         Color color = Color.black;
 
         while (time < 1f)
         {
-            time += Time.deltaTime * 0.5f;
-            color.a = Mathf.Lerp(0.9f, 0f, time);
+            time += Time.deltaTime;
+            color.a = Mathf.Lerp(0.0f, 0.7f, time);
             black.color = color;
             yield return null;
         }
 
-        P_002();
-    }
+        SoundManager.Inst.PlayBGM(2);
 
-    void P_002()
-    {
         var chat = new DialogueFormat[]
         {
-            new DialogueFormat(Scenario.Me, Scenario.Me, "아, 꿈이었나?.."),
-
-            new DialogueFormat(Scenario.Me, Scenario.Me, "응? 이건 누구지?",() => {
-                girl.gameObject.SetActive(true);
-                girl.ChangeCloth(0);
-                girl.ChangeDeco(0);
-                girl.ChangeFace(4);
-                }),
-            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "(화난 표정의 소녀가 옆에 누워있다.)"),
-            new DialogueFormat(Scenario.Me, Scenario.Me, "아, 동생인가?"),
-
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "<size=40>(퍽!)</size>", ()=>{ SoundManager.Inst.PlaySfx(2); girl.ChangeFace(6);}),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "<size=40>바보! 멍청이! 변태!!!</size>",()=>{ girl.ChangeFace(4);}  ),
-
-            new DialogueFormat(Scenario.Me, Scenario.Me, "으; 아퍼라~",()=>{ girl.gameObject.SetActive(false); } ),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(어라..?)"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(잠깐만, 뭔가가 이상하다.)"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(소미는 분명 내 동생인데..)"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(내가 고백을 했었다고?)"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "(이..이 기억은 뭐지?!)"),
         };
 
         Instantiate(Resources.Load<DialogueUI>("Dialogue")).Dialogue(chat);
@@ -94,28 +95,10 @@ public class Story011 : StoryPlayer
         StoryManager.Inst.OnEndDialogue += P_003;
     }
 
+
     void P_003()
     {
         StoryManager.Inst.OnEndDialogue -= P_003;
-
-        Invoke("P_004", 1.0f);
-    }
-
-    void P_004()
-    {
-        var chat = new DialogueFormat[]
-        {
-            new DialogueFormat(Scenario.Me, Scenario.Me, "근데, 쟤는 왜 내 침대에 누워있던거람?"),
-        };
-
-        Instantiate(Resources.Load<DialogueUI>("Dialogue")).Dialogue(chat);
-
-        StoryManager.Inst.OnEndDialogue += P_005;
-    }
-
-    void P_005()
-    {
-        StoryManager.Inst.OnEndDialogue -= P_005;
 
         StartCoroutine(FadeOut());
     }
@@ -131,7 +114,7 @@ public class Story011 : StoryPlayer
         while (time < 1f)
         {
             time += Time.deltaTime * 0.5f;
-            color.a = Mathf.Lerp(0.0f, 1.0f, time);
+            color.a = Mathf.Lerp(0.7f, 1.0f, time);
             black.color = color;
             yield return null;
         }

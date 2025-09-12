@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Story002 : StoryPlayer
+public class Story012 : StoryPlayer
 {
 
     [Header("UI")]
@@ -75,15 +75,16 @@ public class Story002 : StoryPlayer
 
             new DialogueFormat(Scenario.Me, Scenario.Girl, "친구랑 있는데, 인사하면 어떡해!",() => {                }),
             new DialogueFormat(Scenario.Me, Scenario.Girl, "(동생의 얼굴이 빨개진다.)",() => { girl.ChangeFace(5); }),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "그치만, 너무 예뻐서 아는척 하고싶은걸?"),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "뭐..래!!",() => { girl.ChangeFace(4); }),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "그런말 들으면 내가 좋아할 줄 알아?!",() => { }),
 
-            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "어머~ 누구셔?", ()=>{  girl.gameObject.SetActive(false); girl2.SetActive(true); } ),
+            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "애정이 가득해보이네~", ()=>{  girl.gameObject.SetActive(false); girl2.SetActive(true); } ),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "애정은 무슨!..",()=>{  girl.ChangeFace(7); girl.gameObject.SetActive(true); girl2.SetActive(false); }),
+            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "입꼬리가 올라갔는데~?", ()=>{  girl.gameObject.SetActive(false); girl2.SetActive(true); } ),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "장..장난치지마!!",()=>{  girl.gameObject.SetActive(true); girl2.SetActive(false); girl.ChangeFace(5);}),
 
-            new DialogueFormat(Scenario.Me, Scenario.Me, "안녕? 소미 친오빠니까 편하게 대해~",()=>{ girl2.SetActive(false); }  ),
-            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "안녕하세요~",()=>{ girl2.SetActive(true); }  ),
-            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "(작게) 너네 오빠 잘생겼네ㅎㅎ"  ),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "뭐..글치..",() => { girl.gameObject.SetActive(true); girl2.SetActive(false);  }),
-            new DialogueFormat(Scenario.Me, Scenario.UnknownPink, "(작게) 근데, 너 외동 아니었나?",() => { girl.gameObject.SetActive(false);girl2.SetActive(true); }  ),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "...",()=>{ girl2.SetActive(false); girl.gameObject.SetActive(true); }  ),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "(이러쿵.. 저러쿵..)" ),
         };
 
         Instantiate(Resources.Load<DialogueUI>("Dialogue")).Dialogue(chat);
@@ -120,7 +121,7 @@ public class Story002 : StoryPlayer
         var chat = new DialogueFormat[]
         {
             new DialogueFormat(Scenario.Me, Scenario.Me, "(동생으로부터 문자가 왔다.)"),
-            new DialogueFormat(Scenario.Me, Scenario.Girl, "(연락하지마! 바보야!!)"),
+            new DialogueFormat(Scenario.Me, Scenario.Girl, "(점심 맛있는거 해줄테니, 기다리고있어~!)"),
         };
 
         Instantiate(Resources.Load<DialogueUI>("Dialogue")).Dialogue(chat);
@@ -139,7 +140,7 @@ public class Story002 : StoryPlayer
     {
         var chat = new DialogueFormat[]
         {
-            new DialogueFormat(Scenario.Me, Scenario.Me, "갑자기 왜 화를 내는거람?"),
+            new DialogueFormat(Scenario.Me, Scenario.Me, "왠일로 잘해주는거람?"),
         };
 
         Instantiate(Resources.Load<DialogueUI>("Dialogue")).Dialogue(chat);

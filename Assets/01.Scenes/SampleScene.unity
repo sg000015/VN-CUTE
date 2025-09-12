@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a75f7b3b5d0a9f4d85eb26dc1117f62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testScene: 004
+  testScene: 012
 --- !u!1 &669283253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1201,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ef96879fd9f4abf49adf534368182c29, type: 3}
   - {fileID: 8300000, guid: 1e3dcbc867a198445889d3bc1c238f2c, type: 3}
   - {fileID: 8300000, guid: 01546966e9f9c774aa495244764e3d05, type: 3}
+  - {fileID: 8300000, guid: cbd2e5f7ae3a7334eb50003cc1cb7046, type: 3}
   sfxClips:
   - {fileID: 8300000, guid: 68802c036c663d442aff4829b930635c, type: 3}
   - {fileID: 8300000, guid: 559b316671e6a0f41acabcb3854f9393, type: 3}

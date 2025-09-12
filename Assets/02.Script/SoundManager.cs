@@ -37,16 +37,18 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] efxClips;
 
 
-    public void PlayBGM(AudioClip clip)
+    public void PlayBGM(AudioClip clip, float volume = 1.0f)
     {
         bgmSouces.clip = clip;
+        bgmSouces.volume = volume;
         bgmSouces.Play();
     }
 
 
-    public void PlayBGM(int index)
+    public void PlayBGM(int index, float volume = 1.0f)
     {
         bgmSouces.clip = bgmClips[index];
+        bgmSouces.volume = volume;
         bgmSouces.Play();
     }
 
